@@ -1,0 +1,48 @@
+[project]
+name = "incident-briefing-api"
+version = "0.1.0"
+description = "障害報告を保存し、AIで暫定原因・顧客影響・次アクションを要約するオンコール向けバックエンドです。"
+readme = "README.md"
+requires-python = ">=3.11"
+dependencies = [
+  "fastapi",
+  "httpx",
+  "pydantic",
+  "pydantic-settings",
+  "sqlalchemy",
+  "uvicorn[standard]",
+]
+
+[project.optional-dependencies]
+dev = [
+  "black",
+  "mypy",
+  "pytest",
+  "pytest-cov",
+  "ruff",
+]
+
+[tool.black]
+line-length = 100
+target-version = ["py311"]
+
+[tool.ruff]
+line-length = 100
+target-version = "py311"
+
+[tool.ruff.lint]
+select = ["B", "C4", "E", "F", "I", "N", "UP"]
+ignore = ["B008", "E501"]
+
+[tool.ruff.lint.per-file-ignores]
+"tests/conftest.py" = ["E402"]
+
+[tool.pytest.ini_options]
+addopts = "-q"
+testpaths = ["tests"]
+
+[tool.mypy]
+python_version = "3.11"
+strict = true
+plugins = ["pydantic.mypy", "sqlalchemy.ext.mypy.plugin"]
+packages = ["app", "tests"]
